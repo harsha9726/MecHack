@@ -25,10 +25,14 @@
     <!-- Custom styles for this template -->
     <link href="landing page/css/creative.min.css" rel="stylesheet">
     <link href="landing page/css/creative.css" rel="stylesheet">
-
+    <style media="screen">
+      body {
+        background-image: url("img/header.jpg");
+      }
+    </style>
   </head>
 
-  <body id="page-top">
+  <body id="page-top" >
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -78,11 +82,11 @@
     <div class="col col-2">Email</div>
     <div class="col col-3">Delete link</div>
   </li>
-  <% Array.prototype.forEach.call(images, user => { %>
+  <% Array.prototype.forEach.call(users, user => { %>
   <li class="table-row">
     <div class="col col-1" data-label="Username"><%= user.username %></div>
     <div class="col col-2" data-label="Customer Name"><%= user.email %></div>
-    <div class="col col-3" data-label="Amount"><a href="/delete">Delete</a></div>
+    <div class="col col-3" data-label="Amount"><a href="/delete?id="+user._id>Delete</a></div>
   </li>
     <% }) %>
   </ul>

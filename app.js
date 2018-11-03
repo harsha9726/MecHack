@@ -42,10 +42,13 @@ app.get('/', function (request, response) {
 //POST route for updating data
 app.post('/admin', userController.user);
 
+app.get('/delete', userController.deleteuser);
+
 // GET route after registering
 app.get('/profile', userController.userlogin);
 app.get('/admin', userController.userlogin);
 app.get('/userretreive', userController.userretreive);
+
 
 // GET for logout logout
 app.get('/logout', userController.logout);

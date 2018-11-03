@@ -86,12 +86,46 @@ exports.logout = function (req, res, next) {
 }
 
 exports.userretreive = (req,res) =>{
-  User.find().then((images) => {
-  return  res.render('./../views/adminpage2', {
-      title: 'Images',
-      images: images
-    } );
-  }, (e) => {
-  return  res.status(400).send(e);
-  })
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return res.redirect('/');
+        } else {
+          User.find().then((users) => {
+          return  res.render('./../views/adminpage2', {
+              users: users
+            } );
+          }, (e) => {
+          return  res.status(400).send(e);
+          })
+        }
+      }
+    });
+}
+
+exports.deleteuser = (req, res) => {
+  User.findById(req.session.userId)
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return res.redirect('/');
+        } else {
+          console.log(req.query.id);
+          User.findOneAndDelete(req.query.id).then((users) => {
+          return  res.send('<p> User deleted. Press ok to continue</p><a href="/userretreive"><button>Ok</button></a>');
+          }, (e) => {
+          return  res.status(400).send(e);
+          })
+        }
+      }
+    });
 }
